@@ -1,1 +1,43 @@
 #!/usr/bin/env ruby
+
+require 'gli'
+require 'janus/version'
+require 'janus/command/record'
+require 'janus/command/validate'
+require 'janus/configuration'
+
+include GLI::App
+
+program_desc 'Automated visual regression testing on Sauce Labs.'
+version Janus::VERSION
+
+desc 'Sauce Labs Username'
+arg_name 'username'
+flag [:u, :username]
+
+desc 'Sauce Labs API Key'
+arg_name 'access_key'
+flag [:k, :access_key]
+
+desc 'Generate screenshots for all tests'
+command :record do |c|
+  c.action do |global, options, args|
+    record = Janus::Command::Record.new($configuration)
+    record.execute
+  end
+end
+
+desc 'Validate screenshots for all tests'
+command :validate do |c|
+  c.action do |global, options, args|
+    validate = Janus::Command::Validate.new($configuration)
+    validate.execute
+  end
+end
+
+pre do |global, command, options, args|
+  $configuration = Janus::Configuration.load(global, options)
+  true
+end
+
+exit run(ARGV)
