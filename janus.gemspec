@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency('gli', '~> 2.8.1')
+  spec.add_dependency('selenium-webdriver', '~> 2.37.0')
 
   spec.add_development_dependency('bundler', '~> 1.3.5')
   spec.add_development_dependency('guard', '~> 2.2.4')

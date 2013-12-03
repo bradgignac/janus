@@ -10,7 +10,19 @@ module Janus
     end
 
     def initialize(options)
+      @options = options
+    end
 
+    def username
+      @options['username']
+    end
+
+    def access_key
+      @options['access_key']
+    end
+
+    def tests
+      @options['tests']
     end
 
     private

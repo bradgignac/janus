@@ -1,17 +1,22 @@
+require 'janus/recorder'
+
 module Janus
   module Command
     class Record
       def initialize(configuration)
-
+        @configuration = configuration
       end
 
       def execute
-        puts 'Recording...'
+        @configuration.tests.each do |test|
+          record_screenshot(test)
+        end
+      end
 
-        # For each browser:
-        #   For each test:
-        #     Record screenshot.
-        #     Write to disk.
+      def record_screenshot(test)
+        recorder = Janus::Recorder.new(@configuration.username, @configuration.access_key)
+        screenshot = recorder.record(test)
+        screenshot.save('output')
       end
     end
   end
