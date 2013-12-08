@@ -1,0 +1,6 @@
+# URLs to take screenshots of.
+tests:
+- name: google
+  url: http://google.com
+- name: yahoo
+  url: http://yahoo.com

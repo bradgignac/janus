@@ -36,7 +36,7 @@ module Janus
       if File.exists?('Janusfile')
         YAML.load(IO.read('Janusfile'))
       else
-        {}
+        raise 'Could not find Janus configuration file!'
       end
     end
   end
