@@ -1,3 +1,4 @@
+require 'yaml'
 require 'janus/test'
 
 module Janus
