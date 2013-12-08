@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'janus/configuration'
 require 'janus/test'
 
@@ -6,7 +7,8 @@ describe Janus::Configuration do
     it 'merges provided option hashes' do
       a = { a: '' }
       b = { b: '' }
-      File.stub(:exists?) { false }
+      File.stub(:exists?) { true }
+      IO.stub(:read) { YAML.dump({}) }
 
       Janus::Configuration.should_receive(:new).with({ a: '', b: '' })
 
