@@ -10,7 +10,7 @@ module Janus
     end
 
     def save(path)
-      directory = File.join(path, "#{test['name']}.janus")
+      directory = File.join(path, "#{test.name}.janus")
 
       FileUtils.mkpath(directory) unless Dir.exists?(directory)
       IO.write(File.join(directory, 'screenshot.png'), @image, mode: 'wb')

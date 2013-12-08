@@ -1,8 +1,9 @@
 require 'janus/screenshot'
+require 'janus/test'
 
 describe Janus::Screenshot do
   let(:image) { 'image data' }
-  let(:test) { { 'name' => 'test-name' } }
+  let(:test) { Janus::Test.new({ 'name' => 'test-name' }) }
   let(:screenshot) { Janus::Screenshot.new(test: test, image: image) }
 
   describe '#save' do
@@ -25,6 +26,7 @@ describe Janus::Screenshot do
     end
 
     it 'writes screenshot to disk' do
+      FileUtils.stub(:mkpath)
       IO.should_receive(:write).with('base/test-name.janus/screenshot.png', image, mode: 'wb')
 
       screenshot.save('base')

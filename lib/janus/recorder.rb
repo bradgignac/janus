@@ -11,7 +11,7 @@ module Janus
     end
 
     def record(test)
-      @driver.get(test['url'])
+      @driver.get(test.url)
 
       Screenshot.new(test: test, image: @driver.screenshot_as(:png))
     end

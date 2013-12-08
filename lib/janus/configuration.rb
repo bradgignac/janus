@@ -1,3 +1,5 @@
+require 'janus/test'
+
 module Janus
   class Configuration
     def self.load(*args)
@@ -22,7 +24,9 @@ module Janus
     end
 
     def tests
-      @options['tests']
+      @options['tests'].map do |test|
+        Janus::Test.new(test)
+      end
     end
 
     private

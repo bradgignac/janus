@@ -1,4 +1,5 @@
 require 'janus/configuration'
+require 'janus/test'
 
 describe Janus::Configuration do
   describe '::load' do
@@ -40,11 +41,15 @@ describe Janus::Configuration do
   describe '#tests' do
     it 'creates test for each entry in configuration file' do
       test_configuration = []
-      test_configuration << { name: 'a', url: 'a' }
-      test_configuration << { name: 'b', url: 'b' }
+      test_configuration << { 'name' => 'a', 'url' => 'a' }
+      test_configuration << { 'name' => 'b', 'url' => 'b' }
 
       configuration = Janus::Configuration.new({ 'tests' => test_configuration })
-      configuration.tests.should == test_configuration
+
+      configuration.tests.each_with_index do |test, i|
+        test.name.should == test_configuration[i]['name']
+        test.url.should == test_configuration[i]['url']
+      end
     end
   end
 end

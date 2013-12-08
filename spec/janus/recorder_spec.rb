@@ -1,9 +1,10 @@
 require 'janus/recorder'
+require 'janus/test'
 
 describe Janus::Recorder do
   let(:png) { double }
   let(:driver) { double }
-  let(:test) { { 'name' => 'name', 'url' => 'this is my url' } }
+  let(:test) { Janus::Test.new({ 'name' => 'name', 'url' => 'this is my url' }) }
   let(:recorder) { Janus::Recorder.new('username', 'access_key') }
 
   it 'builds driver for specified user' do
