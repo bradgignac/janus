@@ -1,5 +1,5 @@
 require 'janus/configuration'
-require 'janus/recorder'
+require 'janus/test'
 require 'janus/command/record'
 
 describe Janus::Command::Record do
@@ -18,15 +18,17 @@ describe Janus::Command::Record do
   end
 
   describe '#record_screenshot' do
-    let(:test) { { name: 'name', url: 'ur' } }
+    let(:test) { Janus::Test.new({ name: 'name', url: 'ur' }) }
     let(:screenshot) { double }
     let(:recorder) { double }
 
     it 'saves screenshot of test URL' do
-      Janus::Recorder.stub(:new) { recorder }
+      config.stub(:username) { 'username' }
+      config.stub(:access_key) { 'access key' }
+
+      Janus::Screenshot.should_receive(:capture).with(test, username: 'username', access_key: 'access key').and_return(screenshot)
 
       screenshot.should_receive(:save)
-      recorder.stub(:record) { |t| t == test ? screenshot : nil }
 
       record.record_screenshot(test)
     end

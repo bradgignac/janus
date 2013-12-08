@@ -1,4 +1,4 @@
-require 'janus/recorder'
+require 'janus/screenshot'
 
 module Janus
   module Command
@@ -14,8 +14,7 @@ module Janus
       end
 
       def record_screenshot(test)
-        recorder = Janus::Recorder.new(@configuration.username, @configuration.access_key)
-        screenshot = recorder.record(test)
+        screenshot = Janus::Screenshot.capture(test, username: @configuration.username, access_key: @configuration.access_key)
         screenshot.save('output')
       end
     end

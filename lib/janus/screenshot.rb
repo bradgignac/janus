@@ -1,8 +1,19 @@
 require 'fileutils'
+require 'selenium/webdriver'
 
 module Janus
   class Screenshot
     attr_accessor :test, :image
+
+    def self.capture(test, options = {})
+      driver = Selenium::WebDriver.for(:remote, {
+        url: "http://#{options[:username]}:#{options[:access_key]}@ondemand.saucelabs.com/wd/hub",
+        desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome
+      })
+      driver.get(test.url)
+
+      Screenshot.new(test: test, image: driver.screenshot_as(:png))
+    end
 
     def initialize(parameters = {})
       @test = parameters[:test]
