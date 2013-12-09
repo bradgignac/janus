@@ -1,5 +1,5 @@
 module Janus
-  module Commands
+  module Command
     class Validate
       def initialize(configuration)
 
