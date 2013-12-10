@@ -36,6 +36,20 @@ describe Janus::Screenshot do
     end
   end
 
+  describe '::load' do
+    it 'loads screenshot from disk' do
+      IO.stub(:read) do |path, mode|
+        'my image' if path == 'base/my test.janus/screenshot.png'
+      end
+
+      test = Janus::Test.new('name' => 'my test')
+      screenshot = Janus::Screenshot.load(test, path: 'base')
+
+      screenshot.test.should == test
+      screenshot.image.should == 'my image'
+    end
+  end
+
   describe '#save' do
     it 'creates test directory if it does not exist' do
       IO.stub(:write)
