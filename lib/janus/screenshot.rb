@@ -15,6 +15,13 @@ module Janus
       Screenshot.new(test: test, image: driver.screenshot_as(:png))
     end
 
+    def self.load(test, options = {})
+      path = File.join(options[:path], "#{test.name}.janus", 'screenshot.png')
+      image = IO.read(path, mode: 'rb')
+
+      Screenshot.new(test: test, image: image)
+    end
+
     def initialize(parameters = {})
       @test = parameters[:test]
       @image = parameters[:image]

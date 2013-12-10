@@ -2,16 +2,20 @@ module Janus
   module Command
     class Validate
       def initialize(configuration)
-
+        @configuration = configuration
       end
 
       def execute
-        puts 'Validating...'
+        @configuration.tests.each do |test|
+          validate_screenshot(test)
+        end
+      end
 
-        # For each browser:
-        #   For each test:
-        #     Record screenshot.
-        #     Compare to existing screenshot.
+      def validate_screenshot(test)
+        original = Janus::Screenshot.load(test, path: 'output')
+        fresh = Janus::Screenshot.capture(test, username: @configuration.username, access_key: @configuration.access_key)
+
+        raise "#{test.name}: Screenshots did not match!" unless original.image == fresh.image
       end
     end
   end
