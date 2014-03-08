@@ -1,4 +1,4 @@
-require 'janus/comparer'
+require 'janus/comparison'
 
 module Janus
   module Command
@@ -17,7 +17,7 @@ module Janus
         original = Janus::Screenshot.load(test, path: 'output')
         fresh = Janus::Screenshot.capture(test, username: @configuration.username, access_key: @configuration.access_key)
 
-        Janus::Comparer.compare(original, fresh)
+        Janus::Comparison.compare(original, fresh)
       end
     end
   end

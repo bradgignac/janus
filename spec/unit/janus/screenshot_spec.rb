@@ -1,3 +1,4 @@
+require 'oily_png'
 require 'janus/screenshot'
 require 'janus/test'
 
@@ -47,6 +48,15 @@ describe Janus::Screenshot do
 
       screenshot.test.should == test
       screenshot.image.should == 'my image'
+    end
+  end
+
+  describe '#dimensions' do
+    it 'returns image dimensions' do
+      image.stub(:width) { 100 }
+      image.stub(:height) { 200 }
+
+      screenshot.dimensions.should == { width: 100, height: 200 }
     end
   end
 

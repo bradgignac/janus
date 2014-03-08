@@ -27,6 +27,10 @@ module Janus
       @image = parameters[:image]
     end
 
+    def dimensions
+      { width: @image.width, height: @image.height }
+    end
+
     def save(path)
       directory = File.join(path, "#{test.name}.janus")
 

@@ -1,4 +1,4 @@
-require 'janus/comparer'
+require 'janus/comparison'
 require 'janus/configuration'
 require 'janus/screenshot'
 require 'janus/command/validate'
@@ -29,7 +29,7 @@ describe Janus::Command::Validate do
     end
 
     it 'compares original and fresh screenshot' do
-      Janus::Comparer.should_receive(:compare).with(original, fresh)
+      Janus::Comparison.should_receive(:compare).with(original, fresh)
 
       validate.validate_screenshot(test)
     end

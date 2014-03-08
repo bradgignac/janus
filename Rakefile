@@ -1,6 +1,8 @@
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 
+task :spec => ['spec:unit', 'spec:integration']
+
 namespace :spec do
   RSpec::Core::RakeTask.new(:unit) do |t|
     t.pattern = 'spec/unit/**/*_spec.rb'
