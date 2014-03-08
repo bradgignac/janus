@@ -1,3 +1,4 @@
+require 'janus/comparer'
 require 'janus/configuration'
 require 'janus/screenshot'
 require 'janus/command/validate'
@@ -27,18 +28,10 @@ describe Janus::Command::Validate do
       Janus::Screenshot.stub(:capture) { fresh }
     end
 
-    it 'raises exception when screenshots do not match' do
-      original.stub(:image) { 'original data' }
-      fresh.stub(:image) { 'changes' }
+    it 'compares original and fresh screenshot' do
+      Janus::Comparer.should_receive(:compare).with(original, fresh)
 
-      expect { validate.validate_screenshot(test) }.to raise_error('my test: Screenshots did not match!')
-    end
-
-    it 'does not raise exception when screenshots match' do
-      original.stub(:image) { 'original data' }
-      fresh.stub(:image) { 'original data' }
-
-      expect { validate.validate_screenshot(test) }.not_to raise_error
+      validate.validate_screenshot(test)
     end
   end
 end

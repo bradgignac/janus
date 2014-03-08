@@ -1,3 +1,5 @@
+require 'janus/comparer'
+
 module Janus
   module Command
     class Validate
@@ -15,7 +17,7 @@ module Janus
         original = Janus::Screenshot.load(test, path: 'output')
         fresh = Janus::Screenshot.capture(test, username: @configuration.username, access_key: @configuration.access_key)
 
-        raise "#{test.name}: Screenshots did not match!" unless original.image == fresh.image
+        Janus::Comparer.compare(original, fresh)
       end
     end
   end
