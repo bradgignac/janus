@@ -2,7 +2,7 @@
 require File.expand_path('../lib/janus/version', __FILE__)
 
 Gem::Specification.new do |spec|
-  spec.name = 'janus'
+  spec.name = 'janus-cli'
   spec.version = Janus::VERSION
   spec.author = 'Brad Gignac'
   spec.email = 'bgignac@bradgignac.com'
