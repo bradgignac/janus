@@ -26,6 +26,13 @@ describe Janus::Configuration do
     end
   end
 
+  describe '#directory' do
+    it 'returns directory' do
+      configuration = Janus::Configuration.new('directory' => 'directory')
+      configuration.directory.should == 'directory'
+    end
+  end
+
   describe '#username' do
     it 'returns username' do
       configuration = Janus::Configuration.new('username' => 'username')

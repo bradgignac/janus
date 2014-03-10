@@ -1,6 +1,5 @@
-require 'janus/configuration'
-require 'janus/test'
 require 'janus/command/record'
+require 'janus/configuration'
 
 describe Janus::Command::Record do
   let(:config) { Janus::Configuration.new({}) }
@@ -18,17 +17,38 @@ describe Janus::Command::Record do
   end
 
   describe '#record_screenshot' do
-    let(:test) { Janus::Test.new({ name: 'name', url: 'ur' }) }
+    let(:test) { double }
     let(:screenshot) { double }
-    let(:recorder) { double }
 
-    it 'saves screenshot of test URL' do
-      config.stub(:username) { 'username' }
-      config.stub(:access_key) { 'access key' }
+    # TODO: Builder
+    let(:directory) do
+      directory = double
+      directory.stub(:write)
+      directory
+    end
 
-      Janus::Screenshot.should_receive(:capture).with(test, username: 'username', access_key: 'access key').and_return(screenshot)
+    # TODO: Builder
+    let(:selenium) do
+      selenium = double
+      selenium.stub(:read) { screenshot }
+      selenium
+    end
 
-      screenshot.should_receive(:save)
+    before :each do
+      Janus::IO::Directory.stub(:new) { directory }
+      Janus::IO::Selenium.stub(:new) { selenium }
+    end
+
+    it 'reads screenshot from Selenium' do
+      Janus::IO::Selenium.should_receive(:new).with(config) { selenium }
+      selenium.should_receive(:read).with(test) { screenshot }
+
+      record.record_screenshot(test)
+    end
+
+    it 'writes screenshot to Janus directory' do
+      Janus::IO::Directory.should_receive(:new).with(config) { directory}
+      directory.should_receive(:write).with(test, screenshot)
 
       record.record_screenshot(test)
     end

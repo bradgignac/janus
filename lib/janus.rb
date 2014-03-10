@@ -1,3 +1,2 @@
 module Janus
-
 end

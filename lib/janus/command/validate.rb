@@ -1,4 +1,6 @@
-require 'janus/comparison'
+require 'janus/core/engine'
+require 'janus/io/directory'
+require 'janus/io/selenium'
 
 module Janus
   module Command
@@ -14,10 +16,14 @@ module Janus
       end
 
       def validate_screenshot(test)
-        original = Janus::Screenshot.load(test, path: 'output')
-        fresh = Janus::Screenshot.capture(test, username: @configuration.username, access_key: @configuration.access_key)
+        directory = Janus::IO::Directory.new(@configuration)
+        original = directory.read(test)
 
-        Janus::Comparison.compare(original, fresh)
+        selenium = Janus::IO::Selenium.new(@configuration)
+        fresh = selenium.read(test)
+
+        engine = Janus::Core::Engine.create
+        engine.execute(original, fresh)
       end
     end
   end

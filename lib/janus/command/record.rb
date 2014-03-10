@@ -1,3 +1,5 @@
+require 'janus/io/directory'
+require 'janus/io/selenium'
 require 'janus/screenshot'
 
 module Janus
@@ -14,8 +16,11 @@ module Janus
       end
 
       def record_screenshot(test)
-        screenshot = Janus::Screenshot.capture(test, username: @configuration.username, access_key: @configuration.access_key)
-        screenshot.save('output')
+        selenium = Janus::IO::Selenium.new(@configuration)
+        screenshot = selenium.read(test)
+
+        directory = Janus::IO::Directory.new(@configuration)
+        directory.write(test, screenshot)
       end
     end
   end
