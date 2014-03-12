@@ -24,6 +24,10 @@ module Janus
       @options['access_key']
     end
 
+    def directory
+      @options['directory']
+    end
+
     def tests
       @options['tests'].map do |test|
         Janus::Test.new(test)
@@ -34,7 +38,7 @@ module Janus
 
     def self.load_configuration_file
       if File.exists?('Janusfile')
-        YAML.load(IO.read('Janusfile'))
+        YAML.load(::IO.read('Janusfile'))
       else
         raise 'Could not find Janus configuration file!'
       end

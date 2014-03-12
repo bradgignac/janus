@@ -8,7 +8,7 @@ describe Janus::Command::Initialize do
     it 'writes samples configuration if file does not exist' do
       File.stub(:exists?) { false }
 
-      source = File.expand_path('../../../../lib/janus/template/Janusfile', __FILE__)
+      source = File.expand_path('../../../../../lib/janus/template/Janusfile', __FILE__)
       destination = 'Janusfile'
       FileUtils.should_receive(:copy).with(source, destination)
 
