@@ -5,6 +5,11 @@ describe Janus::Command::Record do
   let(:config) { Janus::Configuration.new({}) }
   let(:record) { Janus::Command::Record.new(config) }
 
+  before :each do
+    record.stub(:puts)
+    record.stub(:print)
+  end
+
   describe '#execute' do
     it 'records screenshot for each configured test' do
       config.stub(:tests) { ['one', 'two'] }

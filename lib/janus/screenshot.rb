@@ -9,5 +9,9 @@ module Janus
     def dimensions
       { width: @image.width, height: @image.height }
     end
+
+    def pixels
+      @image.pixels
+    end
   end
 end

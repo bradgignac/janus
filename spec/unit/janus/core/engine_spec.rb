@@ -5,10 +5,13 @@ describe Janus::Core::Engine do
   describe '::create' do
     let(:engine) { double }
 
-    it 'creates engine with DimensionsRule' do
+    before :each do
       Janus::Core::Engine.stub(:new) { engine }
+    end
 
-      engine.should_receive(:add_rule).with(an_instance_of(Janus::Core::DimensionsRule))
+    it 'creates engine with rules' do
+      engine.should_receive(:add_rule).with(an_instance_of(Janus::Core::DimensionsRule)).ordered
+      engine.should_receive(:add_rule).with(an_instance_of(Janus::Core::ThresholdRule)).ordered
 
       Janus::Core::Engine.create
     end

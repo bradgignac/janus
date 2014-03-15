@@ -12,4 +12,15 @@ describe Janus::Screenshot do
       screenshot.dimensions.should == { width: 100, height: 200 }
     end
   end
+
+  describe '#pixels' do
+    it 'returns pixels of image' do
+      pixels = double
+
+      image.should_receive(:pixels) { pixels }
+
+      screenshot = Janus::Screenshot.new(image)
+      screenshot.pixels.should == pixels
+    end
+  end
 end

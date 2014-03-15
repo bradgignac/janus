@@ -6,6 +6,7 @@ module Janus
       def self.create
         engine = Engine.new
         engine.add_rule(Janus::Core::DimensionsRule.new)
+        engine.add_rule(Janus::Core::ThresholdRule.new(0.1))
         engine
       end
 
