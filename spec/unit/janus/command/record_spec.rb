@@ -17,8 +17,13 @@ describe Janus::Command::Record do
   end
 
   describe '#record_screenshot' do
-    let(:test) { double }
     let(:screenshot) { double }
+
+    let(:test) do
+      test = double
+      test.stub(:name)
+      test
+    end
 
     # TODO: Builder
     let(:directory) do

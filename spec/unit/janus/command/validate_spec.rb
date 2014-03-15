@@ -17,7 +17,12 @@ describe Janus::Command::Validate do
   end
 
   describe '#validate_screenshot' do
-    let(:test) { double }
+    let(:test) do
+      test = double
+      test.stub(:name)
+      test
+    end
+
     let(:fresh) { double }
     let(:original) { double }
 
