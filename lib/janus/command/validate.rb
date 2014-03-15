@@ -10,9 +10,14 @@ module Janus
       end
 
       def execute
+        puts 'Validating screenshots...'
+        puts ''
+
         @configuration.tests.each do |test|
           validate_screenshot(test)
         end
+
+        puts ''
       end
 
       def validate_screenshot(test)
@@ -24,6 +29,12 @@ module Janus
 
         engine = Janus::Core::Engine.create
         engine.execute(original, fresh)
+
+        print '  ✔ '.green
+      rescue
+        print '  ✖ '.red
+      ensure
+        puts test.name
       end
     end
   end
