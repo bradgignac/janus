@@ -5,6 +5,11 @@ describe Janus::Command::Validate do
   let(:config) { Janus::Configuration.new({}) }
   let(:validate) { Janus::Command::Validate.new(config) }
 
+  before :each do
+    validate.stub(:puts)
+    validate.stub(:print)
+  end
+
   describe '#execute' do
     it 'validates screenshots for each configured test' do
       config.stub(:tests) { %w(one two) }

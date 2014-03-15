@@ -33,6 +33,18 @@ describe Janus::Configuration do
     end
   end
 
+  describe '#threshold' do
+    it 'returns threshold' do
+      configuration = Janus::Configuration.new('threshold' => 0.1)
+      configuration.threshold.should == 0.1
+    end
+
+    it 'defaults threshold to zero' do
+      configuration = Janus::Configuration.new
+      configuration.threshold.should == 0
+    end
+  end
+
   describe '#username' do
     it 'returns username' do
       configuration = Janus::Configuration.new('username' => 'username')
