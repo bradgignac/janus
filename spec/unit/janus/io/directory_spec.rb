@@ -1,12 +1,7 @@
 require 'janus/io/directory'
 
 describe Janus::IO::Directory do
-  # TODO: Builder
-  let(:config) do
-    config = double
-    config.stub(:directory) { 'base' }
-    config
-  end
+  let(:directory) { 'base' }
 
   # TODO: Builder
   let(:test) do
@@ -15,7 +10,7 @@ describe Janus::IO::Directory do
     test
   end
 
-  let(:io) { Janus::IO::Directory.new(config) }
+  let(:io) { Janus::IO::Directory.new(directory) }
 
   describe '#read' do
     it 'loads screenshot from disk' do

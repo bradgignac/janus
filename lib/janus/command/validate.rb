@@ -24,11 +24,11 @@ module Janus
       end
 
       def validate_screenshot(test)
-        directory = Janus::IO::Directory.new(@configuration)
-        original = directory.read(test)
-
-        selenium = Janus::IO::Selenium.new(@configuration)
+        selenium = Janus::IO::Selenium.new(@configuration.username, @configuration.access_key)
         fresh = selenium.read(test)
+
+        directory = Janus::IO::Directory.new(@configuration.directory)
+        original = directory.read(test)
 
         engine = Janus::Core::Engine.create(@configuration)
         engine.execute(original, fresh)

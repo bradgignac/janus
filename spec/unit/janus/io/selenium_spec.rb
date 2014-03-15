@@ -24,6 +24,14 @@ describe Janus::IO::Selenium do
     test
   end
 
+  let(:browser) do
+    browser = double
+    browser.stub(:platform) { 'platform' }
+    browser.stub(:browser) { 'browser' }
+    browser.stub(:version) { 'version' }
+    browser
+  end
+
   before :each do
     ChunkyPNG::Image::stub(:from_blob) { image }
     Selenium::WebDriver.stub(:for) { driver }
@@ -32,16 +40,20 @@ describe Janus::IO::Selenium do
   it 'builds Selenium with provided credentials' do
     Selenium::WebDriver.should_receive(:for).with(:remote, {
       url: "http://username:key@ondemand.saucelabs.com/wd/hub",
-      desired_capabilities: ::Selenium::WebDriver::Remote::Capabilities.chrome
+      desired_capabilities: ::Selenium::WebDriver::Remote::Capabilities.new(
+        platform: browser.platform,
+        browser_name: browser.browser,
+        version: browser.version
+      )
     })
 
-    Janus::IO::Selenium.new(config)
+    Janus::IO::Selenium.new('username', 'key', browser)
   end
 
   it 'navigates to the provided URL' do
     driver.should_receive(:get).with('this is my url')
 
-    io = Janus::IO::Selenium.new(config)
+    io = Janus::IO::Selenium.new('username', 'key', browser)
     io.read(test)
   end
 
@@ -50,7 +62,7 @@ describe Janus::IO::Selenium do
     driver.should_receive(:screenshot_as).with(:png) { blob }
     ChunkyPNG::Image.should_receive(:from_blob).with(blob) { image }
 
-    io = Janus::IO::Selenium.new(config)
+    io = Janus::IO::Selenium.new('username', 'key', browser)
 
     screenshot = io.read(test)
     screenshot.image.should == image

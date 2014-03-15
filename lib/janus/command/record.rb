@@ -24,10 +24,10 @@ module Janus
       end
 
       def record_screenshot(test)
-        selenium = Janus::IO::Selenium.new(@configuration)
+        selenium = Janus::IO::Selenium.new(@configuration.username, @configuration.access_key)
         screenshot = selenium.read(test)
 
-        directory = Janus::IO::Directory.new(@configuration)
+        directory = Janus::IO::Directory.new(@configuration.directory)
         directory.write(test, screenshot)
 
         print '  ✔ '.green

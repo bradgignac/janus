@@ -4,8 +4,8 @@ require 'janus/screenshot'
 module Janus
   module IO
     class Directory
-      def initialize(configuration)
-        @directory = configuration.directory
+      def initialize(directory)
+        @directory = directory
       end
 
       def read(test)

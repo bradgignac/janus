@@ -2,7 +2,7 @@ require 'janus/command/record'
 require 'janus/configuration'
 
 describe Janus::Command::Record do
-  let(:config) { Janus::Configuration.new({}) }
+  let(:config) { Janus::Configuration.new('username' => 'username', 'access_key' => 'key', 'directory' => 'base') }
   let(:record) { Janus::Command::Record.new(config) }
 
   before :each do
@@ -50,14 +50,14 @@ describe Janus::Command::Record do
     end
 
     it 'reads screenshot from Selenium' do
-      Janus::IO::Selenium.should_receive(:new).with(config) { selenium }
+      Janus::IO::Selenium.should_receive(:new).with('username', 'key') { selenium }
       selenium.should_receive(:read).with(test) { screenshot }
 
       record.record_screenshot(test)
     end
 
     it 'writes screenshot to Janus directory' do
-      Janus::IO::Directory.should_receive(:new).with(config) { directory}
+      Janus::IO::Directory.should_receive(:new).with('base') { directory}
       directory.should_receive(:write).with(test, screenshot)
 
       record.record_screenshot(test)

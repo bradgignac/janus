@@ -2,7 +2,7 @@ require 'janus/command/validate'
 require 'janus/configuration'
 
 describe Janus::Command::Validate do
-  let(:config) { Janus::Configuration.new({}) }
+  let(:config) { Janus::Configuration.new('username' => 'username', 'access_key' => 'key', 'directory' => 'base') }
   let(:validate) { Janus::Command::Validate.new(config) }
 
   before :each do
@@ -59,14 +59,14 @@ describe Janus::Command::Validate do
     end
 
     it 'reads screenshot from Selenium' do
-      Janus::IO::Selenium.should_receive(:new).with(config) { selenium }
+      Janus::IO::Selenium.should_receive(:new).with('username', 'key') { selenium }
       selenium.should_receive(:read).with(test) { fresh }
 
       validate.validate_screenshot(test)
     end
 
     it 'reads screenshot from directory' do
-      Janus::IO::Directory.should_receive(:new).with(config) { directory }
+      Janus::IO::Directory.should_receive(:new).with('base') { directory }
       selenium.should_receive(:read).with(test) { original }
 
       validate.validate_screenshot(test)
