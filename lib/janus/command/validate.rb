@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'janus/core/engine'
 require 'janus/io/directory'
 require 'janus/io/selenium'

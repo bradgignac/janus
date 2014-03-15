@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'colorize'
 require 'janus/io/directory'
 require 'janus/io/selenium'
