@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'colored'
+require 'colorize'
 require 'gli'
 require 'janus/version'
 require 'janus/command/initialize'
