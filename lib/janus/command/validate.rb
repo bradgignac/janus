@@ -1,5 +1,6 @@
 # coding: utf-8
 
+require 'colorize'
 require 'janus/core/engine'
 require 'janus/io/directory'
 require 'janus/io/selenium'
@@ -29,7 +30,7 @@ module Janus
         selenium = Janus::IO::Selenium.new(@configuration)
         fresh = selenium.read(test)
 
-        engine = Janus::Core::Engine.create
+        engine = Janus::Core::Engine.create(@configuration)
         engine.execute(original, fresh)
 
         print '  ✔ '.green

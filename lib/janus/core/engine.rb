@@ -3,10 +3,10 @@ require 'janus/core/rule'
 module Janus
   module Core
     class Engine
-      def self.create
+      def self.create(configuration)
         engine = Engine.new
-        engine.add_rule(Janus::Core::DimensionsRule.new)
-        engine.add_rule(Janus::Core::ThresholdRule.new(0.1))
+        engine.add_rule(Janus::Core::DimensionsRule.new(configuration))
+        engine.add_rule(Janus::Core::ThresholdRule.new(configuration))
         engine
       end
 

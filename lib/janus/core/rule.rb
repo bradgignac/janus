@@ -4,6 +4,10 @@ require 'janus/core/error'
 module Janus
   module Core
     class Rule
+      def initialize(configuration)
+        @configuration = configuration
+      end
+
       def execute(original, fresh)
       end
     end
@@ -15,13 +19,9 @@ module Janus
     end
 
     class ThresholdRule < Rule
-      def initialize(threshold)
-        @threshold = threshold
-      end
-
       def execute(original, fresh)
         difference = calculate_total_difference(original, fresh)
-        raise Janus::Core::ComparisonError unless difference <= @threshold
+        raise Janus::Core::ComparisonError unless difference <= @configuration.threshold
       end
 
       private

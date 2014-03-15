@@ -2,8 +2,15 @@ require 'oily_png'
 require 'janus/core/rule'
 
 describe Janus::Core::DimensionsRule do
+  subject { Janus::Core::DimensionsRule.new(configuration) }
+
   let(:original) { double }
   let(:fresh) { double }
+  let(:configuration) do
+    configuration = double
+    configuration.stub(:threshold) { 0.5 }
+    configuration
+  end
 
   describe '#execute' do
     it 'does not raise exception when dimensions are the same' do
@@ -23,10 +30,15 @@ describe Janus::Core::DimensionsRule do
 end
 
 describe Janus::Core::ThresholdRule do
-  subject { Janus::Core::ThresholdRule.new(0.5) }
+  subject { Janus::Core::ThresholdRule.new(configuration) }
 
   let(:original) { double }
   let(:fresh) { double }
+  let(:configuration) do
+    configuration = double
+    configuration.stub(:threshold) { 0.5 }
+    configuration
+  end
 
   describe '#execute' do
     it 'does not raise exception when difference is below threshold' do

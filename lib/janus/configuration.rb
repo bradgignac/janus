@@ -12,7 +12,7 @@ module Janus
       Janus::Configuration.new(options)
     end
 
-    def initialize(options)
+    def initialize(options = {})
       @options = options
     end
 
@@ -26,6 +26,10 @@ module Janus
 
     def directory
       @options['directory']
+    end
+
+    def threshold
+      @options['threshold'] || 0
     end
 
     def tests

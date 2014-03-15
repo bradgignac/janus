@@ -4,7 +4,8 @@ require 'janus/core/error'
 require 'janus/screenshot'
 
 describe Janus::Core::Engine do
-  let(:engine) { Janus::Core::Engine.create }
+  let(:config) { Janus::Configuration.new }
+  let(:engine) { Janus::Core::Engine.create(config) }
   let(:square_base) { ChunkyPNG::Image::from_file('spec/support/square-base.png') }
   let(:square_big) { ChunkyPNG::Image::from_file('spec/support/square-big.png') }
 
