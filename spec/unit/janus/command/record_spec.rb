@@ -26,11 +26,7 @@ describe Janus::Command::Record do
 
   describe '#record_screenshot' do
     let(:screenshot) { double }
-
-    let(:browser) do
-      browser = double
-      browser
-    end
+    let(:browser) { double }
 
     let(:test) do
       test = double
