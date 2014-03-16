@@ -7,5 +7,9 @@ module Janus
       @browser = attributes['browser']
       @version = attributes['version']
     end
+
+    def to_s
+      "#{platform}, #{browser} #{version}".strip
+    end
   end
 end
