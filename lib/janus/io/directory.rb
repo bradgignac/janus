@@ -26,7 +26,7 @@ module Janus
       private
 
       def image_path(test)
-        segments = [@browser.platform, @browser.browser, @browser.version]
+        segments = [@browser.platform, @browser.name, @browser.version]
         file_name = segments.compact.join('-')
 
         File.join(image_directory(test), "#{file_name}.png")

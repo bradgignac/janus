@@ -1,15 +1,15 @@
 module Janus
   class Browser
-    attr_reader :platform, :browser, :version
+    attr_reader :platform, :name, :version
 
     def initialize(attributes = {})
       @platform = attributes['platform']
-      @browser = attributes['browser']
+      @name = attributes['name']
       @version = attributes['version']
     end
 
     def to_s
-      "#{platform}, #{browser} #{version}".strip
+      "#{platform}, #{name} #{version}".strip
     end
   end
 end

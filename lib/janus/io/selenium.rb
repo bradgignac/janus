@@ -10,7 +10,7 @@ module Janus
           url: "http://#{username}:#{access_key}@ondemand.saucelabs.com/wd/hub",
           desired_capabilities: ::Selenium::WebDriver::Remote::Capabilities.new(
             platform: browser.platform,
-            browser_name: browser.browser,
+            browser_name: browser.name,
             version: browser.version
           )
         })

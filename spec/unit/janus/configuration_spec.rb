@@ -62,14 +62,14 @@ describe Janus::Configuration do
   describe '#browsers' do
     it 'creates browser for each entry in configuration file' do
       browser_configuration = []
-      browser_configuration << { 'platform' => 'a', 'browser' => 'a', 'version' => 'a' }
-      browser_configuration << { 'platform' => 'b', 'browser' => 'b', 'version' => 'b' }
+      browser_configuration << { 'platform' => 'a', 'name' => 'a', 'version' => 'a' }
+      browser_configuration << { 'platform' => 'b', 'name' => 'b', 'version' => 'b' }
 
       configuration = Janus::Configuration.new({ 'browsers' => browser_configuration })
 
       configuration.browsers.each_with_index do |browser, i|
         browser.platform.should == browser_configuration[i]['platform']
-        browser.browser.should == browser_configuration[i]['browser']
+        browser.name.should == browser_configuration[i]['name']
         browser.version.should == browser_configuration[i]['version']
       end
     end

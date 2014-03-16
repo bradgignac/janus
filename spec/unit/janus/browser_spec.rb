@@ -6,9 +6,9 @@ describe Janus::Browser do
     browser.platform.should == 'platform'
   end
 
-  it 'sets browser' do
-    browser = Janus::Browser.new('browser' => 'browser')
-    browser.browser.should == 'browser'
+  it 'sets name' do
+    browser = Janus::Browser.new('name' => 'name')
+    browser.name.should == 'name'
   end
 
   it 'sets version' do
@@ -19,13 +19,13 @@ describe Janus::Browser do
 
   describe '#to_s' do
     it 'converts to string for browser with version' do
-      browser = Janus::Browser.new('platform' => 'platform', 'browser' => 'browser', 'version' => 0.7)
-      browser.to_s.should == 'platform, browser 0.7'
+      browser = Janus::Browser.new('platform' => 'platform', 'name' => 'name', 'version' => 0.7)
+      browser.to_s.should == 'platform, name 0.7'
     end
 
     it 'converts to string for browser without version' do
-      browser = Janus::Browser.new('platform' => 'platform', 'browser' => 'browser')
-      browser.to_s.should == 'platform, browser'
+      browser = Janus::Browser.new('platform' => 'platform', 'name' => 'name')
+      browser.to_s.should == 'platform, name'
     end
   end
 end

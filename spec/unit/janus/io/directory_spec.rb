@@ -6,7 +6,7 @@ describe Janus::IO::Directory do
   let(:browser) do
     browser = double
     browser.stub(:platform) { 'platform' }
-    browser.stub(:browser) { 'browser' }
+    browser.stub(:name) { 'name' }
     browser.stub(:version) { nil }
     browser
   end
@@ -24,14 +24,14 @@ describe Janus::IO::Directory do
     it 'loads screenshot from disk for browser with version' do
       browser.stub(:version) { 'version' }
 
-      ChunkyPNG::Image.should_receive(:from_file).with('base/my test.janus/platform-browser-version.png') { 'my image' }
+      ChunkyPNG::Image.should_receive(:from_file).with('base/my test.janus/platform-name-version.png') { 'my image' }
 
       screenshot = io.read(test)
       screenshot.image.should == 'my image'
     end
 
     it 'loads screenshot from disk for browser without version' do
-      ChunkyPNG::Image.should_receive(:from_file).with('base/my test.janus/platform-browser.png') { 'my image' }
+      ChunkyPNG::Image.should_receive(:from_file).with('base/my test.janus/platform-name.png') { 'my image' }
 
       screenshot = io.read(test)
       screenshot.image.should == 'my image'
@@ -69,13 +69,13 @@ describe Janus::IO::Directory do
     it 'writes screenshot with version to disk' do
       browser.stub(:version) { 'version' }
 
-      image.should_receive(:save).with('base/my test.janus/platform-browser-version.png')
+      image.should_receive(:save).with('base/my test.janus/platform-name-version.png')
 
       io.write(test, screenshot)
     end
 
     it 'writes screenshot without version to disk' do
-      image.should_receive(:save).with('base/my test.janus/platform-browser.png')
+      image.should_receive(:save).with('base/my test.janus/platform-name.png')
 
       io.write(test, screenshot)
     end

@@ -27,7 +27,7 @@ describe Janus::IO::Selenium do
   let(:browser) do
     browser = double
     browser.stub(:platform) { 'platform' }
-    browser.stub(:browser) { 'browser' }
+    browser.stub(:name) { 'name' }
     browser.stub(:version) { 'version' }
     browser
   end
@@ -42,7 +42,7 @@ describe Janus::IO::Selenium do
       url: "http://username:key@ondemand.saucelabs.com/wd/hub",
       desired_capabilities: ::Selenium::WebDriver::Remote::Capabilities.new(
         platform: browser.platform,
-        browser_name: browser.browser,
+        browser_name: browser.name,
         version: browser.version
       )
     })
