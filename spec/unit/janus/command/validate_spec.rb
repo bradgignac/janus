@@ -2,7 +2,7 @@ require 'janus/command/validate'
 require 'janus/configuration'
 
 describe Janus::Command::Validate do
-  let(:config) { Janus::Configuration.new({}) }
+  let(:config) { Janus::Configuration.new('username' => 'username', 'access_key' => 'key', 'directory' => 'base') }
   let(:validate) { Janus::Command::Validate.new(config) }
 
   before :each do
@@ -12,10 +12,13 @@ describe Janus::Command::Validate do
 
   describe '#execute' do
     it 'validates screenshots for each configured test' do
+      config.stub(:browsers) { %w(red blue) }
       config.stub(:tests) { %w(one two) }
 
-      validate.should_receive(:validate_screenshot).with('one')
-      validate.should_receive(:validate_screenshot).with('two')
+      validate.should_receive(:validate_screenshot).with('red', 'one')
+      validate.should_receive(:validate_screenshot).with('red', 'two')
+      validate.should_receive(:validate_screenshot).with('blue', 'one')
+      validate.should_receive(:validate_screenshot).with('blue', 'two')
 
       validate.execute
     end
@@ -30,6 +33,7 @@ describe Janus::Command::Validate do
 
     let(:fresh) { double }
     let(:original) { double }
+    let(:browser) { double }
 
     # TODO: Builder
     let(:engine) do
@@ -59,23 +63,23 @@ describe Janus::Command::Validate do
     end
 
     it 'reads screenshot from Selenium' do
-      Janus::IO::Selenium.should_receive(:new).with(config) { selenium }
+      Janus::IO::Selenium.should_receive(:new).with('username', 'key', browser) { selenium }
       selenium.should_receive(:read).with(test) { fresh }
 
-      validate.validate_screenshot(test)
+      validate.validate_screenshot(browser, test)
     end
 
     it 'reads screenshot from directory' do
-      Janus::IO::Directory.should_receive(:new).with(config) { directory }
+      Janus::IO::Directory.should_receive(:new).with('base', browser) { directory }
       selenium.should_receive(:read).with(test) { original }
 
-      validate.validate_screenshot(test)
+      validate.validate_screenshot(browser, test)
     end
 
     it 'executes engine' do
       engine.should_receive(:execute).with(original, fresh)
 
-      validate.validate_screenshot(test)
+      validate.validate_screenshot(browser, test)
     end
   end
 end

@@ -1,4 +1,5 @@
 require 'yaml'
+require 'janus/browser'
 require 'janus/test'
 
 module Janus
@@ -30,6 +31,12 @@ module Janus
 
     def threshold
       @options['threshold'] || 0
+    end
+
+    def browsers
+      @options['browsers'].map do |browser|
+        Janus::Browser.new(browser)
+      end
     end
 
     def tests

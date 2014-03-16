@@ -4,8 +4,9 @@ require 'janus/screenshot'
 module Janus
   module IO
     class Directory
-      def initialize(configuration)
-        @directory = configuration.directory
+      def initialize(directory, browser)
+        @directory = directory
+        @browser = browser
       end
 
       def read(test)
@@ -24,12 +25,15 @@ module Janus
 
       private
 
-      def image_directory(test)
-        File.join(@directory, "#{test.name}.janus")
+      def image_path(test)
+        segments = [@browser.platform, @browser.name, @browser.version]
+        file_name = segments.compact.join('-')
+
+        File.join(image_directory(test), "#{file_name}.png")
       end
 
-      def image_path(test)
-        File.join(image_directory(test), 'screenshot.png')
+      def image_directory(test)
+        File.join(@directory, "#{test.name}.janus")
       end
     end
   end

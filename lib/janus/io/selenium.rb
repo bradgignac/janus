@@ -5,13 +5,14 @@ require 'janus/screenshot'
 module Janus
   module IO
     class Selenium
-      def initialize(configuration)
-        username = configuration.username
-        access_key = configuration.access_key
-
+      def initialize(username, access_key, browser)
         @driver = ::Selenium::WebDriver.for(:remote, {
           url: "http://#{username}:#{access_key}@ondemand.saucelabs.com/wd/hub",
-          desired_capabilities: ::Selenium::WebDriver::Remote::Capabilities.chrome
+          desired_capabilities: ::Selenium::WebDriver::Remote::Capabilities.new(
+            platform: browser.platform,
+            browser_name: browser.name,
+            version: browser.version
+          )
         })
       end
 

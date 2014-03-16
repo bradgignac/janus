@@ -2,7 +2,7 @@ require 'janus/command/record'
 require 'janus/configuration'
 
 describe Janus::Command::Record do
-  let(:config) { Janus::Configuration.new({}) }
+  let(:config) { Janus::Configuration.new('username' => 'username', 'access_key' => 'key', 'directory' => 'base') }
   let(:record) { Janus::Command::Record.new(config) }
 
   before :each do
@@ -11,11 +11,14 @@ describe Janus::Command::Record do
   end
 
   describe '#execute' do
-    it 'records screenshot for each configured test' do
+    it 'records screenshot for each configured test and browser combination' do
+      config.stub(:browsers) { ['red', 'blue'] }
       config.stub(:tests) { ['one', 'two'] }
 
-      record.should_receive(:record_screenshot).with('one')
-      record.should_receive(:record_screenshot).with('two')
+      record.should_receive(:record_screenshot).with('red', 'one')
+      record.should_receive(:record_screenshot).with('red', 'two')
+      record.should_receive(:record_screenshot).with('blue', 'one')
+      record.should_receive(:record_screenshot).with('blue', 'two')
 
       record.execute
     end
@@ -23,6 +26,7 @@ describe Janus::Command::Record do
 
   describe '#record_screenshot' do
     let(:screenshot) { double }
+    let(:browser) { double }
 
     let(:test) do
       test = double
@@ -50,17 +54,17 @@ describe Janus::Command::Record do
     end
 
     it 'reads screenshot from Selenium' do
-      Janus::IO::Selenium.should_receive(:new).with(config) { selenium }
+      Janus::IO::Selenium.should_receive(:new).with('username', 'key', browser) { selenium }
       selenium.should_receive(:read).with(test) { screenshot }
 
-      record.record_screenshot(test)
+      record.record_screenshot(browser, test)
     end
 
     it 'writes screenshot to Janus directory' do
-      Janus::IO::Directory.should_receive(:new).with(config) { directory}
+      Janus::IO::Directory.should_receive(:new).with('base', browser) { directory}
       directory.should_receive(:write).with(test, screenshot)
 
-      record.record_screenshot(test)
+      record.record_screenshot(browser, test)
     end
   end
 end
