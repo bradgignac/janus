@@ -8,6 +8,10 @@ module Janus
       @version = attributes['version']
     end
 
+    def eql?(other)
+      platform == other.platform && name == other.name && version == other.version
+    end
+
     def to_s
       "#{platform}, #{name} #{version}".strip
     end
