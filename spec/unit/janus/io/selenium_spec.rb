@@ -37,7 +37,7 @@ describe Janus::IO::Selenium do
     Selenium::WebDriver.stub(:for) { driver }
   end
 
-  it 'builds Selenium with provided credentials' do
+  it 'builds Selenium driver with provided credentials for new capabilities' do
     Selenium::WebDriver.should_receive(:for).with(:remote, {
       url: "http://username:key@ondemand.saucelabs.com/wd/hub",
       desired_capabilities: ::Selenium::WebDriver::Remote::Capabilities.new(
@@ -46,6 +46,14 @@ describe Janus::IO::Selenium do
         version: browser.version
       )
     })
+
+    Janus::IO::Selenium.new('username', 'key', browser)
+  end
+
+  it 're-uses Selenium driver with provided credentials for existing capabilities' do
+    Janus::IO::Selenium.new('username', 'key', browser)
+
+    Selenium::WebDriver.should_not_receive(:for)
 
     Janus::IO::Selenium.new('username', 'key', browser)
   end
