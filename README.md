@@ -49,23 +49,10 @@ directory for an example of Janus in action.
 
 ## Configuring Janus
 
-**directory** (required)
+**tests** (required)
 
-The location where Janus screenshots are stored.
-
-**url** (optional)
-
-The base URL for all screenshots. All test URLs will be relative to this URL.
-
-**threshold** (optional)
-
-The percentage of change that is allowed in a screenshot. This value can be
-overridden for each individual test.
-
-**resolution** (optional)
-
-The browser resolution at which screenshots should be taken. This value is limited
-by the options available on Sauce Labs.
+An array of screenshots to take. Each entry in the array contains a name and
+URL. All URLs are relative to the specified base URL.
 
 **browsers** (required)
 
@@ -73,11 +60,15 @@ An array of browsers to run your tests against. Each entry in the array contains
 a platform, browser, and optional version. See the [Sauce Labs platform documentation](https://saucelabs.com/docs/platforms)
 for more information on the valid browsers.
 
-**tests** (required)
+**directory** (required)
 
-An array of screenshots to take. Each entry in the array contains a name, URL,
-and optional threshold. All URLs are relative to the specified base URL. If a
-threshold is defined, it will override the global theshold.
+The location where Janus screenshots are stored.
+
+**threshold** (optional)
+
+The percentage of change that is allowed in a screenshot. This value can be
+overridden for each individual test. *Defaults to 0*.
+
 
 ## Best Practices
 
