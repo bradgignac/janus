@@ -25,6 +25,10 @@ module Janus
       @options['access_key']
     end
 
+    def tunnel?
+      @options['tunnel']
+    end
+
     def directory
       @options['directory']
     end

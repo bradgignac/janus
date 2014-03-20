@@ -1,6 +1,7 @@
 # coding: utf-8
 
 require 'colorize'
+require 'sauce/connect'
 require 'janus/core/engine'
 require 'janus/io/directory'
 require 'janus/io/selenium'
@@ -13,6 +14,8 @@ module Janus
       end
 
       def execute
+        Sauce::Connect.connect!(quiet: true) if @configuration.tunnel?
+
         puts 'Validating screenshots...'
         puts ''
 
