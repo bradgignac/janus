@@ -26,6 +26,27 @@ describe Janus::Configuration do
     end
   end
 
+  describe '#username' do
+    it 'returns username' do
+      configuration = Janus::Configuration.new('username' => 'username')
+      configuration.username.should == 'username'
+    end
+  end
+
+  describe '#access_key' do
+    it 'returns access key' do
+      configuration = Janus::Configuration.new('access_key' => 'access_key')
+      configuration.access_key.should == 'access_key'
+    end
+  end
+
+  describe '#tunnel' do
+    it 'returns tunnel setting' do
+      configuration = Janus::Configuration.new('tunnel' => true)
+      configuration.tunnel?.should == true
+    end
+  end
+
   describe '#directory' do
     it 'returns directory' do
       configuration = Janus::Configuration.new('directory' => 'directory')
@@ -42,20 +63,6 @@ describe Janus::Configuration do
     it 'defaults threshold to zero' do
       configuration = Janus::Configuration.new
       configuration.threshold.should == 0
-    end
-  end
-
-  describe '#username' do
-    it 'returns username' do
-      configuration = Janus::Configuration.new('username' => 'username')
-      configuration.username.should == 'username'
-    end
-  end
-
-  describe '#access_key' do
-    it 'returns access key' do
-      configuration = Janus::Configuration.new('access_key' => 'access_key')
-      configuration.access_key.should == 'access_key'
     end
   end
 

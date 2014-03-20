@@ -11,10 +11,30 @@ describe Janus::Command::Validate do
   end
 
   describe '#execute' do
-    it 'validates screenshots for each configured test' do
+    before :each do
       config.stub(:browsers) { %w(red blue) }
       config.stub(:tests) { %w(one two) }
+    end
 
+    it 'starts tunnel when tunnel is true' do
+      config.stub(:tunnel?) { true }
+      validate.stub(:validate_screenshot)
+
+      Sauce::Connect.should_receive(:connect!)
+
+      validate.execute
+    end
+
+    it 'does not start tunnel when tunnel is false' do
+      config.stub(:tunnel?) { false }
+      validate.stub(:validate_screenshot)
+
+      Sauce::Connect.should_not_receive(:connect!)
+
+      validate.execute
+    end
+
+    it 'validates screenshots for each configured test' do
       validate.should_receive(:validate_screenshot).with('red', 'one')
       validate.should_receive(:validate_screenshot).with('red', 'two')
       validate.should_receive(:validate_screenshot).with('blue', 'one')

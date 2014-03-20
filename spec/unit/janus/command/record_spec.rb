@@ -1,3 +1,4 @@
+require 'sauce/connect'
 require 'janus/command/record'
 require 'janus/configuration'
 
@@ -8,13 +9,35 @@ describe Janus::Command::Record do
   before :each do
     record.stub(:puts)
     record.stub(:print)
+
+    Sauce::Connect.stub(:connect!)
   end
 
   describe '#execute' do
-    it 'records screenshot for each configured test and browser combination' do
+    before :each do
       config.stub(:browsers) { ['red', 'blue'] }
       config.stub(:tests) { ['one', 'two'] }
+    end
 
+    it 'starts tunnel when tunnel is true' do
+      config.stub(:tunnel?) { true }
+      record.stub(:record_screenshot)
+
+      Sauce::Connect.should_receive(:connect!)
+
+      record.execute
+    end
+
+    it 'does not start tunnel when tunnel is false' do
+      config.stub(:tunnel?) { false }
+      record.stub(:record_screenshot)
+
+      Sauce::Connect.should_not_receive(:connect!)
+
+      record.execute
+    end
+
+    it 'records screenshot for each configured test and browser combination' do
       record.should_receive(:record_screenshot).with('red', 'one')
       record.should_receive(:record_screenshot).with('red', 'two')
       record.should_receive(:record_screenshot).with('blue', 'one')
