@@ -60,15 +60,43 @@ An array of browsers to run your tests against. Each entry in the array contains
 a platform, browser, and optional version. See the [Sauce Labs platform documentation](https://saucelabs.com/docs/platforms)
 for more information on the valid browsers.
 
-**directory** (required)
+**source** (required)
 
-The location where Janus screenshots are stored.
+The source from which screenshots will be recorded. This parameter accepts a hash
+of options. See [Source Drivers](#source-drivers) for more information.
+
+**output** (required)
+
+The output to which screenshots will be persisted. This parameter accepts a hash
+of options. See [Output Drivers](#output-drivers) for more information.
 
 **threshold** (optional)
 
 The percentage of change that is allowed in a screenshot. This value can be
 overridden for each individual test. *Defaults to 0*.
 
+## Source Drivers
+
+**Sauce Labs**
+
+```
+source:
+  type: sauce
+  tunnel: true    # Whether or not to start a Sauce Connect tunnel.
+```
+
+Additionally, the Sauce Labs driver expects the SAUCE_USERNAME and SAUCE_ACCESS_KEY
+environment variables to be set.
+
+## Output Drivers
+
+**Directory**
+
+```
+output:
+  type: directory
+  path: path/to/screenshot    # Path to which screenshots will be saved.
+```
 
 ## Best Practices
 
