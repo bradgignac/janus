@@ -1,5 +1,7 @@
 require 'fileutils'
 require 'janus/configuration'
+require 'janus/source/sauce'
+require 'janus/storage/directory'
 require 'janus/test'
 
 describe Janus::Configuration do
@@ -26,31 +28,33 @@ describe Janus::Configuration do
     end
   end
 
-  describe '#username' do
-    it 'returns username' do
-      configuration = Janus::Configuration.new('username' => 'username')
-      configuration.username.should == 'username'
+  describe '#source' do
+    it 'instantiates driver with provided options' do
+      Janus::Source::Sauce.should_receive(:new).with('some' => 'other', 'options' => 'too')
+
+      configuration = Janus::Configuration.new({
+        'source' => {
+          'type' => 'sauce',
+          'some' => 'other',
+          'options' => 'too'
+        }
+      })
+      configuration.source
     end
   end
 
-  describe '#access_key' do
-    it 'returns access key' do
-      configuration = Janus::Configuration.new('access_key' => 'access_key')
-      configuration.access_key.should == 'access_key'
-    end
-  end
+  describe '#storage' do
+    it 'instantiates driver with provided options' do
+      Janus::Storage::Directory.should_receive(:new).with('some' => 'other', 'options' => 'too')
 
-  describe '#tunnel' do
-    it 'returns tunnel setting' do
-      configuration = Janus::Configuration.new('tunnel' => true)
-      configuration.tunnel?.should == true
-    end
-  end
-
-  describe '#directory' do
-    it 'returns directory' do
-      configuration = Janus::Configuration.new('directory' => 'directory')
-      configuration.directory.should == 'directory'
+      configuration = Janus::Configuration.new({
+        'storage' => {
+          'type' => 'directory',
+          'some' => 'other',
+          'options' => 'too'
+        }
+      })
+      configuration.storage
     end
   end
 

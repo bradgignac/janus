@@ -1,10 +1,6 @@
 # coding: utf-8
 
 require 'colorize'
-require 'sauce/connect'
-require 'janus/io/directory'
-require 'janus/io/selenium'
-require 'janus/screenshot'
 
 module Janus
   module Command
@@ -14,8 +10,6 @@ module Janus
       end
 
       def execute
-        Sauce::Connect.connect!(quiet: true) if @configuration.tunnel?
-
         puts 'Recording screenshots...'
         puts ''
 
@@ -36,11 +30,8 @@ module Janus
       end
 
       def record_screenshot(browser, test)
-        selenium = Janus::IO::Selenium.new(@configuration.username, @configuration.access_key, browser)
-        screenshot = selenium.read(test)
-
-        directory = Janus::IO::Directory.new(@configuration.directory, browser)
-        directory.write(test, screenshot)
+        screenshot = @configuration.source.read(test, browser)
+        @configuration.storage.write(test, browser, screenshot)
 
         print '✔ '.green
       rescue

@@ -1,20 +1,20 @@
-require 'janus/core/engine'
-require 'janus/core/rule'
+require 'janus/engine'
+require 'janus/rule'
 
-describe Janus::Core::Engine do
+describe Janus::Engine do
   describe '::create' do
     let(:config) { double }
     let(:engine) { double }
 
     before :each do
-      Janus::Core::Engine.stub(:new) { engine }
+      Janus::Engine.stub(:new) { engine }
     end
 
     it 'creates engine with rules' do
-      engine.should_receive(:add_rule).with(an_instance_of(Janus::Core::DimensionsRule)).ordered
-      engine.should_receive(:add_rule).with(an_instance_of(Janus::Core::ThresholdRule)).ordered
+      engine.should_receive(:add_rule).with(an_instance_of(Janus::DimensionsRule)).ordered
+      engine.should_receive(:add_rule).with(an_instance_of(Janus::ThresholdRule)).ordered
 
-      Janus::Core::Engine.create(config)
+      Janus::Engine.create(config)
     end
   end
 

@@ -1,8 +1,8 @@
 require 'oily_png'
-require 'janus/core/rule'
+require 'janus/rule'
 
-describe Janus::Core::DimensionsRule do
-  subject { Janus::Core::DimensionsRule.new(configuration) }
+describe Janus::DimensionsRule do
+  subject { Janus::DimensionsRule.new(configuration) }
 
   let(:original) { double }
   let(:fresh) { double }
@@ -29,8 +29,8 @@ describe Janus::Core::DimensionsRule do
   end
 end
 
-describe Janus::Core::ThresholdRule do
-  subject { Janus::Core::ThresholdRule.new(configuration) }
+describe Janus::ThresholdRule do
+  subject { Janus::ThresholdRule.new(configuration) }
 
   let(:original) { double }
   let(:fresh) { double }
