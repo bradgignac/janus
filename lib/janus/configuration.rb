@@ -53,8 +53,10 @@ module Janus
 
     def driver_for_type(io)
       options = @options[io]
-      type = options.delete('type').capitalize
-      klass_name = "Janus::#{io.capitalize}::#{type}"
+      type = options.delete('type')
+
+      require "janus/#{io}/#{type}"
+      klass_name = "Janus::#{io.capitalize}::#{type.capitalize}"
       klass = klass_name.split('::').reduce(Object) do |o, n|
         o.const_get(n)
       end
