@@ -53,28 +53,28 @@ describe Janus::Source::Sauce do
       })
       Selenium::WebDriver.should_receive(:for).with(:remote, url: url, desired_capabilities: capabilities)
 
-      sauce.capture(test, browser)
+      sauce.read(test, browser)
     end
 
     it 're-uses existing driver when browser is used again' do
-      sauce.capture(test, browser)
+      sauce.read(test, browser)
 
       Selenium::WebDriver.should_not_receive(:for)
 
-      sauce.capture(test, browser)
+      sauce.read(test, browser)
     end
 
     it 'navigates to provided URL' do
       driver.should_receive(:get).with('this is my url')
 
-      sauce.capture(test, browser)
+      sauce.read(test, browser)
     end
 
     it 'captures screenshot' do
       capture = double
       driver.should_receive(:capture_screenshot) { capture }
 
-      screenshot = sauce.capture(test, browser)
+      screenshot = sauce.read(test, browser)
       screenshot.should == capture
     end
   end
