@@ -12,7 +12,7 @@ module Janus
         ::Sauce::Connect.connect!(quiet: true) if options['tunnel']
       end
 
-      def capture(test, browser)
+      def read(test, browser)
         driver = build_driver(browser)
         driver.get(test.url)
         driver.capture_screenshot

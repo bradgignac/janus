@@ -34,8 +34,7 @@ module Janus
         @configuration.storage.write(test, browser, screenshot)
 
         print '✔ '.green
-      rescue => e
-        puts e
+      rescue
         print '✖ '.red
       ensure
         puts test.name
