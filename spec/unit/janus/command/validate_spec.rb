@@ -11,30 +11,10 @@ describe Janus::Command::Validate do
   end
 
   describe '#execute' do
-    before :each do
+    it 'validates screenshots for each configured test' do
       config.stub(:browsers) { %w(red blue) }
       config.stub(:tests) { %w(one two) }
-    end
 
-    it 'starts tunnel when tunnel is true' do
-      config.stub(:tunnel?) { true }
-      validate.stub(:validate_screenshot)
-
-      Sauce::Connect.should_receive(:connect!)
-
-      validate.execute
-    end
-
-    it 'does not start tunnel when tunnel is false' do
-      config.stub(:tunnel?) { false }
-      validate.stub(:validate_screenshot)
-
-      Sauce::Connect.should_not_receive(:connect!)
-
-      validate.execute
-    end
-
-    it 'validates screenshots for each configured test' do
       validate.should_receive(:validate_screenshot).with('red', 'one')
       validate.should_receive(:validate_screenshot).with('red', 'two')
       validate.should_receive(:validate_screenshot).with('blue', 'one')
@@ -77,21 +57,20 @@ describe Janus::Command::Validate do
     end
 
     before :each do
-      Janus::IO::Directory.stub(:new) { directory }
-      Janus::IO::Selenium.stub(:new) { selenium }
-      Janus::Core::Engine.stub(:create) { engine }
+      config.stub(:source) { selenium }
+      config.stub(:storage) { directory }
+
+      Janus::Engine.stub(:create) { engine }
     end
 
     it 'reads screenshot from Selenium' do
-      Janus::IO::Selenium.should_receive(:new).with('username', 'key', browser) { selenium }
-      selenium.should_receive(:read).with(test) { fresh }
+      selenium.should_receive(:read).with(test, browser) { fresh }
 
       validate.validate_screenshot(browser, test)
     end
 
     it 'reads screenshot from directory' do
-      Janus::IO::Directory.should_receive(:new).with('base', browser) { directory }
-      selenium.should_receive(:read).with(test) { original }
+      directory.should_receive(:read).with(test, browser) { original }
 
       validate.validate_screenshot(browser, test)
     end

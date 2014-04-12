@@ -1,10 +1,7 @@
 # coding: utf-8
 
 require 'colorize'
-require 'sauce/connect'
-require 'janus/core/engine'
-require 'janus/io/directory'
-require 'janus/io/selenium'
+require 'janus/engine'
 
 module Janus
   module Command
@@ -14,8 +11,6 @@ module Janus
       end
 
       def execute
-        Sauce::Connect.connect!(quiet: true) if @configuration.tunnel?
-
         puts 'Validating screenshots...'
         puts ''
 
@@ -36,13 +31,10 @@ module Janus
       end
 
       def validate_screenshot(browser, test)
-        selenium = Janus::IO::Selenium.new(@configuration.username, @configuration.access_key, browser)
-        fresh = selenium.read(test)
+        fresh = @configuration.source.read(test, browser)
+        original = @configuration.storage.read(test, browser)
 
-        directory = Janus::IO::Directory.new(@configuration.directory, browser)
-        original = directory.read(test)
-
-        engine = Janus::Core::Engine.create(@configuration)
+        engine = Janus::Engine.create(@configuration)
         engine.execute(original, fresh)
 
         print '✔ '.green

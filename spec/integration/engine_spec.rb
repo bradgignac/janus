@@ -1,12 +1,11 @@
 require 'oily_png'
 require 'janus/configuration'
-require 'janus/core/engine'
-require 'janus/core/error'
+require 'janus/engine'
 require 'janus/screenshot'
 
 describe 'Engine Integration Test' do
   let(:config) { Janus::Configuration.new('threshold' => 0.2) }
-  let(:engine) { Janus::Core::Engine.create(config) }
+  let(:engine) { Janus::Engine.create(config) }
   let(:square_base) { ChunkyPNG::Image::from_file('spec/support/square-base.png') }
   let(:square_big) { ChunkyPNG::Image::from_file('spec/support/square-big.png') }
   let(:square_ten) { ChunkyPNG::Image::from_file('spec/support/square-ten.png') }

@@ -17,20 +17,12 @@ module Janus
       @options = options
     end
 
-    def username
-      @options['username']
+    def source
+      @source ||= driver_for_type('source')
     end
 
-    def access_key
-      @options['access_key']
-    end
-
-    def tunnel?
-      @options['tunnel']
-    end
-
-    def directory
-      @options['directory']
+    def storage
+      @storage ||= driver_for_type('storage')
     end
 
     def threshold
@@ -57,6 +49,19 @@ module Janus
       else
         raise 'Could not find Janus configuration file!'
       end
+    end
+
+    def driver_for_type(io)
+      options = @options[io]
+      type = options.delete('type')
+
+      require "janus/#{io}/#{type}"
+      klass_name = "Janus::#{io.capitalize}::#{type.capitalize}"
+      klass = klass_name.split('::').reduce(Object) do |o, n|
+        o.const_get(n)
+      end
+
+      klass.new(options)
     end
   end
 end
